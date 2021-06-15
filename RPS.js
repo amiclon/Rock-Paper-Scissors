@@ -8,7 +8,7 @@ var playerSelection = [playerRock, playerPaper, playerScissors]
 var computerScore = 0;
 var playerScore = 0;
 
-document.getElementById("rockButton").onclick = alert("Rock")
+document.getElementById("rockButton").onclick = alert("Rock") //I was just trying something here, for some reason it alerts when the page loads and not on click
 
 function computerPlay() {
 return rpsAnswer[Math.floor(Math.random()*rpsAnswer.length)]
@@ -29,7 +29,7 @@ function playRound(playerSelection, computerSelection) {
         computerSelection == "rock" && playerSelection == playerSelection[1]
     )   {return "You won!"}
 }
-playerSelection.addEventListener(onclick , playRound(playerSelection, computerSelection))
+playerSelection.addEventListener = (onclick , playRound(playerSelection, computerSelection)) //I'm about 100% sure this is wrong
 function game() {
     playRound(playerSelection, computerSelection)
     if (playRound("Tie game"))
