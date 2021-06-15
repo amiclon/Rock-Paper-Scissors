@@ -1,11 +1,14 @@
 
 const rpsAnswer = ['Rock','Paper','Scissors']
-let computerSelection;
-let playerSelection = 'Rock';
-let computerScore = 0;
-let playerScore = 0;
-let win
-let lose
+var computerSelection;
+var playerRock = document.getElementById("rockButton")
+var playerPaper = document.getElementById("paperButton")
+var playerScissors = document.getElementById("scissorsButton");
+var playerSelection = [playerRock, playerPaper, playerScissors]
+var computerScore = 0;
+var playerScore = 0;
+
+document.getElementById("rockButton").onclick = alert("Rock")
 
 function computerPlay() {
 return rpsAnswer[Math.floor(Math.random()*rpsAnswer.length)]
@@ -13,21 +16,20 @@ return rpsAnswer[Math.floor(Math.random()*rpsAnswer.length)]
 
 function playRound(playerSelection, computerSelection) {
     computerSelection = computerPlay().toLowerCase()
-    playerSelection = playerSelection.toLowerCase()
     if (computerSelection == playerSelection) {
         return "Tie game!"
     } else if (
-        computerSelection == "rock" && playerSelection == "scissors" ||
-        computerSelection == "scissors" && playerSelection == "paper" ||
-        computerSelection == "paper" && playerSelection == "rock"
-    )   {return "You lost!"}
+        computerSelection == "rock" && playerSelection == playerSelection[2] ||
+        computerSelection == "scissors" && playerSelection == playerSelection[1] ||
+        computerSelection == "paper" && playerSelection == playerSelection[0]
+    )   {return "You lost!"} 
     else if (
-        computerSelection == "scissors" && playerSelection == "rock" ||
-        computerSelection == "paper" && playerSelection == "scissors" ||
-        computerSelection == "rock" && playerSelection == "paper"
+        computerSelection == "scissors" && playerSelection == playerSelection[0] ||
+        computerSelection == "paper" && playerSelection == playerSelection[2] ||
+        computerSelection == "rock" && playerSelection == playerSelection[1]
     )   {return "You won!"}
 }
-
+playerSelection.addEventListener(onclick , playRound(playerSelection, computerSelection))
 function game() {
     playRound(playerSelection, computerSelection)
     if (playRound("Tie game"))
@@ -37,8 +39,15 @@ function game() {
     if (playRound("You won!")) {
         ++playerScore
     }
-
-
+for (playerScore <= 4; computerScore <= 4;) {
+    return "Try again!"
+} 
+if (computerScore = 5) {
+    return "Failure!"
+}
+if (playerScore = 5) {
+    return "Success!"
+}
 }
 
-console.log(playRound(playerSelection, computerSelection))
+console.log(playRound())
