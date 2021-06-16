@@ -1,53 +1,83 @@
+const ROCK = "Rock";
+const PAPER = "Paper";
+const SCISSORS = "Scissors";
+const ROCK_PAPER_SCISSORS_LIST = [ROCK, PAPER, SCISSORS];
 
-const rpsAnswer = ['Rock','Paper','Scissors']
-var computerSelection;
-var playerRock = document.getElementById("rockButton")
-var playerPaper = document.getElementById("paperButton")
-var playerScissors = document.getElementById("scissorsButton");
-var playerSelection = [playerRock, playerPaper, playerScissors]
-var computerScore = 0;
-var playerScore = 0;
+let computerScore = 0;
+let playerScore = 0;
 
-document.getElementById("rockButton").onclick = alert("Rock") //I was just trying something here, for some reason it alerts when the page loads and not on click
+const getRandomNumber = ({ min = 0, max = 2 } = {}) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1) + min);
+};
 
-function computerPlay() {
-return rpsAnswer[Math.floor(Math.random()*rpsAnswer.length)]
-} 
+const getRandomRockPaperScissors = () => {
+  const myRandomNumber = getRandomNumber();
+  return ROCK_PAPER_SCISSORS_LIST[myRandomNumber];
+};
 
-function playRound(playerSelection, computerSelection) {
-    computerSelection = computerPlay().toLowerCase()
-    if (computerSelection == playerSelection) {
-        return "Tie game!"
-    } else if (
-        computerSelection == "rock" && playerSelection == playerSelection[2] ||
-        computerSelection == "scissors" && playerSelection == playerSelection[1] ||
-        computerSelection == "paper" && playerSelection == playerSelection[0]
-    )   {return "You lost!"} 
-    else if (
-        computerSelection == "scissors" && playerSelection == playerSelection[0] ||
-        computerSelection == "paper" && playerSelection == playerSelection[2] ||
-        computerSelection == "rock" && playerSelection == playerSelection[1]
-    )   {return "You won!"}
+const didPlayerWin = ({ playerChoice, computerChoice } = {}) => {
+  if (!playerChoice) throw Error("playerChoice was undefined");
+  if (!computerChoice) throw Error("computerChoice was undefined");
+
+  const lowerCasePlayerChoice = playerChoice.toLowerCase();
+  const lowerCaseComputerChoice = computerChoice.toLowerCase();
+
+  if (lowerCasePlayerChoice === lowerCaseComputerChoice) {
+    return "Tie game!";
+  }
+
+  if (
+    lowerCasePlayerChoice === ROCK.toLowerCase() &&
+    lowerCaseComputerChoice === SCISSORS.toLowerCase()
+  ) {
+    return true;
+  }
+
+  if (
+    lowerCasePlayerChoice === SCISSORS.toLowerCase() &&
+    lowerCaseComputerChoice === PAPER.toLowerCase()
+  ) {
+    return true;
+  }
+
+  if (
+    lowerCasePlayerChoice === PAPER.toLowerCase() &&
+    lowerCaseComputerChoice === ROCK.toLowerCase()
+  ) {
+    return true;
+  }
+
+  return false;
+};
+
+for (let turn = 1; turn <= 100; turn++) {
+  const playerChoice = getRandomRockPaperScissors();
+  const computerChoice = getRandomRockPaperScissors();
+
+  const isPlayerVictorious = didPlayerWin({
+    playerChoice,
+    computerChoice,
+  });
+
+  if (isPlayerVictorious === true) {
+    playerScore = playerScore + 1;
+  }
+
+  if (isPlayerVictorious === false) {
+    computerScore = computerScore + 1;
+  }
+
+  console.log("the turn is", turn);
+  console.log("playerChoice is", playerChoice);
+  console.log("computerChoice is", computerChoice);
+  console.log("did the player win?", isPlayerVictorious);
 }
-playerSelection.addEventListener = (onclick , playRound(playerSelection, computerSelection)) //I'm about 100% sure this is wrong
-function game() {
-    playRound(playerSelection, computerSelection)
-    if (playRound("Tie game"))
-    if (playRound("You lost!")) {
-        ++computerScore
-    }
-    if (playRound("You won!")) {
-        ++playerScore
-    }
-for (playerScore <= 4; computerScore <= 4;) {
-    return "Try again!"
-} 
-if (computerScore = 5) {
-    return "Failure!"
-}
-if (playerScore = 5) {
-    return "Success!"
-}
-}
 
-console.log(playRound())
+console.log("Final Score for Computer", computerScore);
+console.log("Final Score for Player", playerScore);
+
+module.exports = {
+  didPlayerWin,
+};
